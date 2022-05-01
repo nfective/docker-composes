@@ -1,0 +1,7 @@
+# docker-compose is for testing a single application where all the resources (LoadBalancer, PersistentVolumes, ClusterIP Services) live ona single machine (host), single network 
+# docker-compose can use images created by dockerfiles if they are in the dockerhub repository or github repository
+version: "1"
+Services:
+    service:
+    mssql:
+    graphql:
