@@ -16,5 +16,7 @@ services:
         context: ./app
         dockerfile: Dockerfile.dev
       ports:
+          # Publishes port to the open internet allowing access from the open internet to that particular
+          # service in the pod. No other containers are accessible to the open internet.
           - "8080:8080"
 
