@@ -3,14 +3,18 @@
 version: "3.9"
 services:
     redis-server:
-        image: "redis:6.2.7"
-        volumes:
+      image: "redis:6.2.7"
+      volumes:
             # The redis.conf on the local machine. The context is the location of the current file
             - ./redis.conf:/usr/local/etc/redis/redis.conf
             # Maps the local machine persistent volume to the directory on the container
             # Will store the dump.rdb file specified in the redis.conf
             -  ./data:/data
-        command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+      command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+      ports:
+        # Applications such as .Net can hit port but browsers cannot
+        # WARNING: This service/port should never be published to the open internet. Only used for testing at the moment
+        - "6379:6379"
     app:
       build:
         context: ./app
@@ -18,5 +22,7 @@ services:
       ports:
           # Publishes port to the open internet allowing access from the open internet to that particular
           # service in the pod. No other containers are accessible to the open internet.
-          - "8080:8080"
+        - "8080:8080"
+      depends_on:
+        - "redis-server"
 
